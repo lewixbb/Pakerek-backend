@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: auth
+
+# mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/pakerek?useSSL=false&serverTimezone=Europe/Warsaw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create-drop
+
+#  jwt
+  app:
+    jwtSecret: bab387b782bceef2c8f3a70e8530802f9c46d275845f96f8f9a6edcdb46f3f44c1c32ca47dd636679bd6e7eb1083bd5e51e8ded1edd4c0dce98ce77509b86148
+    jwtExpirationsMs: 2000000
+
+# email
+notification:
+  username: pakereksuplementy@wp.pl
+  password: sVN#yr%+2ae^-&r
+  activation-url: http://localhost:8080/api/registration/activate
+  pw-change-url: http://localhost:8080/api/user/public/changePass
