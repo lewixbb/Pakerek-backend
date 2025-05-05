@@ -1,5 +1,6 @@
 package com.pakerek.auth.security.jwt;
 
+import com.pakerek.auth.exception.JwtCookieMissingException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +17,8 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JwtUtils {
@@ -27,17 +30,18 @@ public class JwtUtils {
     @Value("${spring.app.jwtExpirationsMs}")
     private int jwtExpirationMs;
 
-    public String getJwtFromHeader(HttpServletRequest request){
 
-        // dodałem możliwość obsługi cookie jako opcję
-
-        String token = null;
-        for (Cookie value: Arrays.stream(request.getCookies()).toList()){
-            if (value.getName().equals("jwt")){
-                token = value.getValue();
-            }
+    public String getJwtFromCookie(HttpServletRequest request){
+        String token = readServletCookie(request,"jwt").orElseThrow(
+                JwtCookieMissingException::new
+        );
+        if(!token.isEmpty()){
+            return token;
         }
+        return null;
+    }
 
+    public String getJwtFromHeader(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
         logger.debug("Authorization Header: {}", bearerToken);
         if(bearerToken!=null && bearerToken.startsWith("Bearer ")) {
@@ -90,8 +94,17 @@ public class JwtUtils {
 
     public Cookie generateCookie (String name, String value){
         Cookie cookie = new Cookie(name,value);
-        cookie.setHttpOnly(false);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
         cookie.setMaxAge(jwtExpirationMs);
+        cookie.setPath("/");
         return cookie;
+    }
+
+    private Optional<String> readServletCookie(HttpServletRequest request, String cookieName){
+        return Arrays.stream(request.getCookies())
+                .filter(cookie -> cookieName.equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findAny();
     }
 }

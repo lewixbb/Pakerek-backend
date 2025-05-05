@@ -28,7 +28,6 @@ public class User implements UserDetails {
     private Role role;
     private boolean isNonLocked;
     private boolean isEnabled;
-
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdDay;
@@ -38,7 +37,7 @@ public class User implements UserDetails {
         this.password = password;
         this.role = Role.ROLE_USER;
         this.isNonLocked = true;
-        this.isEnabled = true;
+        this.isEnabled = false;
     }
 
     @Override

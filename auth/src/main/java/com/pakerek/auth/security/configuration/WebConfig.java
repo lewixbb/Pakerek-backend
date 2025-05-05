@@ -10,18 +10,20 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
+        WebMvcConfigurer webMvcConfigurer = new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)
-                        .exposedHeaders("Authorization","test")
+//                        .exposedHeaders("Authorization", "test","X-Total-Count")
+                        .exposedHeaders("*")
                 ;
             }
         };
+        return webMvcConfigurer;
     }
 
 }

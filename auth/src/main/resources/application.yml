@@ -10,7 +10,7 @@ spring:
     password: test
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
 
 #  jwt
   app:
@@ -20,6 +20,8 @@ spring:
 # email
 notification:
   username: pakereksuplementy@wp.pl
-  password: sVN#yr%+2ae^-&r
-  activation-url: http://localhost:8080/api/registration/activate
-  pw-change-url: http://localhost:8080/api/user/public/changePass
+  password: im2Jpk)iRK$2A~X
+#  activation-url: http://localhost:8080/api/registration/activate
+  activation-url: http://localhost:4200/aktywacja
+#  pw-change-url: http://localhost:8080/api/user/public/changePass
+  pw-change-url: http://localhost:4200/odzyskaj-haslo

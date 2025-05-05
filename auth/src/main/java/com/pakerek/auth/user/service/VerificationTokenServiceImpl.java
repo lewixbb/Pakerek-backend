@@ -45,6 +45,12 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     }
 
     @Override
+    public void setTokenAsExpired(VerificationToken token){
+        token.setExpiryDate(new Date(new Date().getTime()-1));
+        verificationTokenRepository.save(token);
+    }
+
+    @Override
     public void tokenValidation(VerificationToken token){
         if(token.getExpiryDate().before(new Date())){
             throw new TokenExpiredException();

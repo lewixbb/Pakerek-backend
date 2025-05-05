@@ -4,6 +4,6 @@ public class TokenExpiredException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Token wygasł";
+        return "Przykro nam ale Twoje żądanie straciło ważność";
     }
 }

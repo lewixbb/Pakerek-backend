@@ -2,15 +2,19 @@ package com.pakerek.auth.user.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@Table(name = "Verification_token")
+@Table(name = "verification_tokens")
 public class VerificationToken {
 
     private static final int EXPIRATION = 24*60*60*1000;
@@ -21,8 +25,8 @@ public class VerificationToken {
     private String token;
     @Enumerated(EnumType.STRING)
     private TokenType type;
-    @ManyToOne(cascade = CascadeType.REFRESH)
-//    @JoinColumn(name = "user_id", unique = true)
+    @ManyToOne
+    @JoinColumn(name = "users_id")
     private User user;
     private Date expiryDate;
 

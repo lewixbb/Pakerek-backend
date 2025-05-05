@@ -35,8 +35,6 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
 
-        //opcjonalnie dodalem generowanie ciasteczka z jwt tokenem
-
         if(authentication.isAuthenticated()){
             Cookie cookie = jwtUtils.generateCookie("jwt", jwtToken);
             response.addCookie(cookie);
@@ -46,7 +44,7 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return ResponseEntity.ok(new LoginResponse(userDetails.getUsername(),roles, jwtToken));
+        return ResponseEntity.ok(new LoginResponse(userDetails.getUsername(),roles));
 
     }
 }

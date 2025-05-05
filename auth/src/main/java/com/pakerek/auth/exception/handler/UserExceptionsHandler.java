@@ -2,6 +2,7 @@ package com.pakerek.auth.exception.handler;
 
 import com.pakerek.auth.exception.TokenExpiredException;
 import com.pakerek.auth.exception.TokenNotFoundException;
+import com.pakerek.auth.exception.UserInactiveException;
 import com.pakerek.auth.exception.UsernameAlreadyExistsException;
 import com.pakerek.auth.exception.dto.ExceptionResponse;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,10 @@ public class UserExceptionsHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(e.getMessage()));
     }
 
+    @ExceptionHandler(value = UserInactiveException.class)
+    ResponseEntity<ExceptionResponse> userInactiveExceptionHandler(UserInactiveException e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ExceptionResponse(e.getMessage()));
+    }
 
 
 }

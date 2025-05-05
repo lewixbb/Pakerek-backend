@@ -12,5 +12,7 @@ public interface VerificationTokenService {
 
     VerificationToken getPasswordChangeToken(String uuid);
 
+    void setTokenAsExpired(VerificationToken token);
+
     void tokenValidation(VerificationToken token);
 }
